@@ -1,6 +1,12 @@
 #include <iostream>
-
+#include "ThreadPool.h"
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    ThreadPool threadPool;
+    threadPool.enqueue([] {
+        std::cout << "hello" << std::endl;
+    });
+    auto future = threadPool.enqueue([](std::string str) { return str; }, "word");
+    std::cout << future.get() << std::endl;
+
     return 0;
 }
